@@ -1,4 +1,3 @@
-import data
 from dataclasses import dataclass
 
 
@@ -11,10 +10,10 @@ from dataclasses import dataclass
 @dataclass
 class TrainConfig:
     rootdir:               str = './data/'
-    train_batch_size:      int = 2
-    val_batch_size:        int = 2
+    train_batch_size:      int = 32
+    val_batch_size:        int = 32
     num_workers:           int = 4
-    patch_size:            int = 2
+    patch_size:            int = 4
     dim:                   int = 1024
     depth:                 int = 6
     heads:                 int = 8
