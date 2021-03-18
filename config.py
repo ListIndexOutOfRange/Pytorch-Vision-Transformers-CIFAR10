@@ -1,4 +1,3 @@
-import data
 from dataclasses import dataclass
 
 

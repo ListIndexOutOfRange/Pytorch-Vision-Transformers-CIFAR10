@@ -202,6 +202,7 @@ class ViT(nn.Module):
                    channels         = 3,
                    num_classes      = 10,
                    dim              = 1024,
+                   patch_size       = config.patch_size,
                    depth            = config.depth,
                    heads            = config.heads,
                    mlp_dim          = config.mlp_dim,
