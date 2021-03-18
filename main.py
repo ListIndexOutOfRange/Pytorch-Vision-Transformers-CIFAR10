@@ -3,7 +3,7 @@
 from argparse import ArgumentParser
 from pl_bolts.datamodules import CIFAR10DataModule
 from pytorch_lightning import Trainer
-from pytorch_lightning.callbacks import LearningRateLogger, EarlyStopping
+from pytorch_lightning.callbacks import LearningRateMonitor, EarlyStopping
 import config as cfg
 from model import LightningModel
 
@@ -15,7 +15,7 @@ def init_trainer():
     parser = ArgumentParser()
     parser = Trainer.add_argparse_args(parser)
     args   = parser.parse_args()
-    lr_logger      = LearningRateLogger()
+    lr_logger      = LearningRateMonitor()
     early_stopping = EarlyStopping(monitor   = 'val_loss',
                                    mode      = 'min',
                                    min_delta = 0.001,
@@ -26,7 +26,9 @@ def init_trainer():
 
 def run_training(config):
     """ Instanciate a datamodule, a model and a trainer and run trainer.fit(model, data) """
-    data    = CIFAR10DataModule(config.rootdir)
+    data    = CIFAR10DataModule(data_dir=config.rootdir,
+                                num_workers=config.num_workers,
+                                batch_size=config.batch_size)
     model   = LightningModel(config)
     trainer = init_trainer()
     trainer.fit(model, data)

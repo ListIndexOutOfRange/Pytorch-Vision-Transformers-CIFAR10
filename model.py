@@ -3,7 +3,7 @@ This class implements all the logic code and will be the one to be fit by a Trai
 """
 
 import torch
-from torch.nn import CrossEntropyLoss
+from torch.nn import CrossEntropyLoss, Softmax
 from torch.optim import SGD
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 import pytorch_lightning as pl
@@ -39,7 +39,7 @@ class LightningModel(pl.LightningModule):
         inputs, targets = batch
         outputs = self(inputs)
         loss    = self.criterion(outputs, targets)
-        acc     = self.accuracy(outputs,  targets)
+        acc     = self.accuracy(Softmax(dim=1)(outputs),  targets)
         self.log('Loss/Train', loss)
         self.log('Accuracy/Train', acc, prog_bar=True, logger=True)
         return {'loss': loss, 'acc': acc}
@@ -48,7 +48,7 @@ class LightningModel(pl.LightningModule):
         inputs, targets = batch
         outputs = self(inputs)
         loss    = self.criterion(outputs, targets)
-        acc     = self.accuracy(outputs,  targets)
+        acc     = self.accuracy(Softmax(dim=1)(outputs),  targets)
         self.log('Loss/Validation', loss)
         self.log('Accuracy/Validation', acc, logger=True)
         return {'val_loss': loss, 'acc': acc}

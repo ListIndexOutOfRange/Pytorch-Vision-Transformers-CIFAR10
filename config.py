@@ -11,10 +11,10 @@ from dataclasses import dataclass
 @dataclass
 class TrainConfig:
     rootdir:               str = './data/'
-    train_batch_size:      int = 2
-    val_batch_size:        int = 2
+    batch_size:            int = 2
     num_workers:           int = 4
-    patch_size:            int = 2
+    image_size:            int = 32
+    patch_size:            int = 8
     dim:                   int = 1024
     depth:                 int = 6
     heads:                 int = 8

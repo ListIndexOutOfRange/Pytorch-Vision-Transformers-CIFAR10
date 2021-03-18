@@ -181,7 +181,7 @@ class ViT(nn.Module):
     def check_patch_size(image_size, patch_size, num_patches):
         assert image_size % patch_size == 0, "the patch size must be a divisor of the image size."
         num_patches_error = f'your number of patches ({num_patches}) is too small.'
-        assert num_patches > MIN_NUM_PATCHES, num_patches_error
+        assert num_patches >=        MIN_NUM_PATCHES, num_patches_error
 
     def forward(self, image: torch.Tensor, mask: torch.Tensor =None) -> torch.Tensor:
         x = self.image_to_patch(image)
@@ -197,7 +197,7 @@ class ViT(nn.Module):
 
     @classmethod
     def from_config(cls, config):
-        return cls(image_size       = config.image,
+        return cls(image_size       = config.image_size,
                    patch_size       = config.patch_size,
                    channels         = 3,
                    num_classes      = 10,
